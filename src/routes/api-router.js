@@ -16,6 +16,6 @@ function handleGet(request, response, next) {
   }
 }
 
-apiRouter.get('/', handleGet);
+apiRouter.get('/test', handleGet);
 
 module.exports = apiRouter;
