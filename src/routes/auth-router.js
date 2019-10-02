@@ -12,9 +12,9 @@ const auth = require('../../middleware/auth');
 
 authRouter.post('/signup', (request, response, next) => {
   console.log(request.body);
-  let user = new User(request.body);
+  const user = new User(request.body);
   user.save()
-    .then(user => {
+    .then((user) => {
       request.token = user.generateToken();
       request.user = user;
       response.set('token', request.token);

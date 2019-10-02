@@ -39,9 +39,10 @@ app.use(errorHandler);
 module.exports = {
   server: app,
   start: (port) => {
-    app.listen(port, () => {
+    const PORT = port || process.env.port || 8080;
+    app.listen(PORT, () => {
       // eslint-disable-next-line no-console
-      console.log(`HELLO! Server is Up on PORT ${port}`);
+      console.log(`HELLO! Server is Up on PORT ${PORT}`);
     });
   },
 };

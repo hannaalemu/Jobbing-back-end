@@ -16,4 +16,4 @@ mongoose.connect(MONGOOSE_URI, {
 });
 
 // Hanna -host app on port 3000
-App.start(process.env.PORT || 3000);
+App.start(process.env.PORT || 8080);
