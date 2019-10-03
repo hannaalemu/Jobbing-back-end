@@ -20,15 +20,18 @@ class DataModel {
   }
 
   put(id, record) {
+    console.log(id);
     const filter = { _id: id };
     const update = record;
+
 
     return this.schema.findOneAndUpdate(filter, update);
   }
 
   delete(id) {
     const filter = { _id: id };
-    return this.schema.findOneAndDelete(filter);
+    console.log(filter);
+    return this.schema.findOneAndRemove(filter);
   }
 }
 

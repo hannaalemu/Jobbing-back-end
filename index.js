@@ -13,6 +13,7 @@ mongoose.connect(MONGOOSE_URI, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
+  useFindAndModify: false
 });
 
 // Hanna -host app on port 3000

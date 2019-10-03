@@ -33,7 +33,7 @@ function handleGetAll(request, response, next) {
 
 function handleGetOne(request, response, next) {
   console.log('getone');
-  const { id } = request.params.id;
+  const { id } = request.params;
   request.model.get(id)
     .then((results) => response.json(results[0]))
     .catch(next);
@@ -47,22 +47,25 @@ function handlePost(request, response, next) {
 }
 
 function handlePut(request, response, next) {
-  console.log(request.body);
-  const { id } = request.params.id;
+  const { id } = request.params;
+  console.log(id);
   const data = request.body;
   request.model.put(id, data)
-    .then((results) => response.json(results))
+    .then((results) => {
+      console.log(results);
+      response.json(results)
+    })
     .catch((error) => next(error));
 }
 
 function handleDelete(request, response, next) {
-  console.log('delete');
-  const { id } = request.params.id;
-  console.log('hello');
+  const { id } = request.params;
   request.model.delete(id)
-    .then((results) => {
-      response.status = 204;
-    })
+    .then((results) => 
+      {
+        response.json(results)
+        response.status = 204;
+      })
     .catch((error) => next(error));
 }
 
