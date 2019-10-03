@@ -62,10 +62,10 @@ function handleDelete(request, response, next) {
   const { id } = request.params;
   request.model.delete(id)
     .then((results) => {
-      response.json(results)
+      response.json(results);
       response.status = 204;
     })
-  .catch((error) => next(error));
+    .catch((error) => next(error));
 } 
 
 module.exports = apiRouter;
