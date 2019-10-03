@@ -23,6 +23,7 @@ apiRouter.delete('/api/v1/:model/:id', handleDelete);
 
 
 function handleGetAll(request, response, next) {
+  console.log('getall');
   request.model.get() 
     .then((results) => {
       response.json(results);
@@ -31,7 +32,8 @@ function handleGetAll(request, response, next) {
 }
 
 function handleGetOne(request, response, next) {
-  const { id } = request.params;
+  console.log('getone');
+  const { id } = request.params.id;
   request.model.get(id)
     .then((results) => response.json(results[0]))
     .catch(next);
@@ -54,11 +56,11 @@ function handlePut(request, response, next) {
 }
 
 function handleDelete(request, response, next) {
+  console.log('delete');
   const { id } = request.params.id;
   console.log('hello');
   request.model.delete(id)
     .then((results) => {
-      console.log(results);
       response.status = 204;
     })
     .catch((error) => next(error));
