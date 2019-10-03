@@ -53,7 +53,7 @@ function handlePut(request, response, next) {
   request.model.put(id, data)
     .then((results) => {
       console.log(results);
-      response.json(results)
+      response.json(results);
     })
     .catch((error) => next(error));
 }
@@ -61,12 +61,11 @@ function handlePut(request, response, next) {
 function handleDelete(request, response, next) {
   const { id } = request.params;
   request.model.delete(id)
-    .then((results) => 
-      {
-        response.json(results)
-        response.status = 204;
-      })
-    .catch((error) => next(error));
-}
+    .then((results) => {
+      response.json(results)
+      response.status = 204;
+    })
+  .catch((error) => next(error));
+} 
 
 module.exports = apiRouter;
