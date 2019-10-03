@@ -6,8 +6,7 @@ const express = require('express');
 
 const authRouter = express.Router();
 
-const User = require('../models/auth/user-model');
-// eslint-disable-next-line no-unused-vars
+const User = require('../models/auth/user-schema');
 const auth = require('../../middleware/auth');
 
 authRouter.post('/signup', (request, response, next) => {

@@ -1,3 +1,5 @@
+/* eslint-disable no-shadow */
+
 'use strict';
 
 const mongoose = require('mongoose');
@@ -9,7 +11,7 @@ const jwt = require('jsonwebtoken');
 const SECRET = process.env.SECRET || 'jobbingisawesome';
 // Hanna - this is the user mongoose schema
 
-const userSchema = new mongoose.Schema({
+const user = new mongoose.Schema({
   username: {
     type: String,
     required: true,
@@ -37,13 +39,13 @@ const capabilities = {
 
 // Hanna - we are going to hash the password before saving it using bcrypt, salt rounds=10
 
-userSchema.pre('save', async function hashPassword() {
+user.pre('save', async function hashPassword() {
   if (this.isModified('passwprd')) {
     this.password = await bcrypt.hash(this.password, 10);
   }
 });
 
-userSchema.statics.authenticateToken = function findUser(token) {
+user.statics.authenticateToken = function findUser(token) {
   try {
     const parsedToken = jwt.verify(token, SECRET);
 
@@ -56,7 +58,7 @@ userSchema.statics.authenticateToken = function findUser(token) {
 
 // Hanna -----------------------------Basic Authentication-------------
 
-userSchema.statics.authenticateBasic = function getQuery(auth) {
+user.statics.authenticateBasic = function getQuery(auth) {
   const query = { username: auth.usermane };
 
   return this.findOne(query)
@@ -64,12 +66,12 @@ userSchema.statics.authenticateBasic = function getQuery(auth) {
     .catch((error) => { throw error; });
 };
 
-userSchema.methods.comparePasswod = async function compare(password) {
-  const valid = await bcrypt.compare(password, this.password);
-  return (valid ? this : null);
+user.methods.comparePasswod = function compare(password) {
+  return bcrypt.compare(password, this.password)
+    .then((valid) => (valid ? this : null));
 };
 
-userSchema.methods.generateToken = function getToken(type) {
+user.methods.generateToken = function getToken(type) {
   const token = {
     id: this._id,
     capabilities: capabilities[this.role],
@@ -81,8 +83,8 @@ userSchema.methods.generateToken = function getToken(type) {
 
 
 // Hanna ------------------------------Bearer AUthentication --------------------
-userSchema.methods.can = function checkCapability(capability) {
+user.methods.can = function checkCapability(capability) {
   return capabilities[this.role].includes(capability);
 };
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('user', user);

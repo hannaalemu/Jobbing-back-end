@@ -5,7 +5,7 @@
 
 // Hanna - this middleware sits between all authenticated requests and checks for auth credentials
 
-const User = require('../src/models/auth/user-model');
+const User = require('../src/models/auth/user-schema');
 
 module.exports = (capability) => {
   // Hanna - We check for basic or bearer auth
