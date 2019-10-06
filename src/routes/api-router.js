@@ -60,6 +60,8 @@ function handlePut(request, response, next) {
 
 function handleDelete(request, response, next) {
   const { id } = request.params;
+
+  console.log(id);
   request.model.delete(id)
     .then((results) => {
       response.json(results);
